@@ -15,11 +15,11 @@ public class TowersOfHanoi {
         if (diskNumInt <= 0) {
             return;
         } else {
-            TowerOfHanoi(diskNumInt - 1, fromRod, toRod, auxRod);
+            // finding the optimal sequence
+            TowerOfHanoi(diskNumInt - 1, fromRod, auxRod, toRod);
             System.out.println(" move disk " + diskNumInt + " from rod " + fromRod + " to rod " + toRod);
-            TowerOfHanoi(diskNumInt - 1, fromRod, toRod, auxRod);
+            TowerOfHanoi(diskNumInt - 1, auxRod, toRod, fromRod);
         }
-
     }
 
     public static void main(String[] args) throws IOException {
@@ -28,17 +28,25 @@ public class TowersOfHanoi {
 
         Scanner myObj = new Scanner(System.in);
 
-        System.out.println("How many disks do you want?");
-        String diskNumString = myObj.nextLine();
+        // get user input
+        while (true) {
+            System.out.println("How many disks do you want?");
+            String diskNumString = myObj.nextLine();
 
-        try {
-            diskNumInt = Integer.parseInt(diskNumString);
-        } catch (NumberFormatException e) {
-            System.out.println("Please input a number greater than 0");
-            diskNumString = myObj.nextLine();
+            // try catch for inputs that are not positive numbers or strings
+            try {
+                diskNumInt = Integer.parseInt(diskNumString);
+                if (diskNumInt >= 0) {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("invalid input");
+            }
+
         }
 
-        TowerOfHanoi(diskNumInt, 'A', 'B', 'C');
+        // calling function
+        TowerOfHanoi(diskNumInt, 'A', 'C', 'B');
 
     }
 
